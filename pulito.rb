@@ -205,6 +205,18 @@ module Pulito
       Kernel.eval(text_value)
     end
   end
+
+  class Lambda < Treetop::Runtime::SyntaxNode
+    def eval
+      # What goes here? D:
+    end
+  end
+
+  class Definition < Treetop::Runtime::SyntaxNode
+    def eval
+      # What goes here? D:
+    end
+  end
 end
 
 if $0 == __FILE__
