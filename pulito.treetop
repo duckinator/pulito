@@ -4,7 +4,7 @@ grammar Pulito
   end
 
   rule cell
-    whitespace* (quotes / number / string / symbol / list / vector) whitespace* <Cell>
+    whitespace* (quotes / number / string / symbol / list / vector / lambda / definition) whitespace* <Cell>
   end
 
   rule quotes
@@ -48,15 +48,15 @@ grammar Pulito
   end
 
   rule lambda
-    vector ':' cell* ';' <Lambda>
+    ':' cell* ';' <Lambda>
   end
 
   rule definition
-    letter+ (whitespace+)? [=]? (whitespace+)? (cell / string / list / vector / lambda / symbol / quotes) <Definition>
+    (symbol) whitespace* (cell / string / list / vector / lambda / symbol / quotes) "\n" <Definition>
   end
 
   rule special
-    [!$%&*/:<=>?^_~+.@-]
+    [!$%&*/<=>?^_~+.@-]
   end
 
   rule letter
