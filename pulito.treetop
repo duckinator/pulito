@@ -52,7 +52,7 @@ grammar Pulito
   end
 
   rule definition
-    letter+ (whitespace+)? [=]? (whitespace+)? (cell / string / list / vector / lambda / symbol / quotes)
+    letter+ (whitespace+)? [=]? (whitespace+)? (cell / string / list / vector / lambda / symbol / quotes) <Definition>
   end
 
   rule special
