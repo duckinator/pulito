@@ -1,28 +1,34 @@
 (require "socket")
 (import TCPSocket)
 
-(def *server* "irc.ninthbit.net")
-(def *port* 6667)
-(def *nick* "pulito-bot")
-(def *user* "pulito")
-(def *realname* "An IRC bot written in Pulito")
-(def *channels* ["#programming" "#offtopic"])
+*server*   = "irc.ninthbit.net"
+*port*     = 6667
+*nick*     = "pulito-bot"
+*user*     = "pulito"
+*realname* = "An IRC bot written in Pulito"
+*channels* = ["#programming" "#offtopic"]
 
-(def *bot* (.new TCPSocket *server* *port*))
+*bot*      = (.new TCPSocket *server* *port*)
 
-(defn send (socket & args)
+send [socket & args]:
   (println ">>>" (.join args))
-  (.puts socket (.join args)))
+  (.puts socket (.join args))
+;
 
-(defn handle-line (line)
+handle-line [line]:
   (println line)
-  (when (.start_with? line "PING")
-    (send *bot* "PONG" (.slice line (range 4 -1))))
-  (when (.. line split (at 1) (== "001"))
-    (send *bot* "JOIN " (.join *channels* ","))))
+  (when (.start_width? line "PING") :
+    (send *bot* "PONG" (.slice line (range 4 -1)))
+  ;)
+  (when (.. line split (at 1) (== "001")) :
+    (send *bot* "JOIN" (.join *channels* ","))
+  ;)
+;
 
 (send *bot* "USER " *user* " * * :" *realname*)
 (send *bot* "NICK " *nick*)
 
-(while (def line (.. *bot* gets chomp))
-  (handle-line line))
+(while (not (.eof *socket*)) :
+  (handle-line line)
+;)
+
