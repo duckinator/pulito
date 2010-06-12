@@ -4,7 +4,7 @@ grammar Pulito
   end
 
   rule cell
-    whitespace* (quotes / number / string / symbol / list / vector / lambda / definition) whitespace* <Cell>
+    whitespace* (quotes / definition / lambda / list / vector / number / string / symbol) whitespace* <Cell>
   end
 
   rule quotes
@@ -48,11 +48,11 @@ grammar Pulito
   end
 
   rule lambda
-    ':' cell* ';' <Lambda>
+    '[' cell* ']:' cell* ';' <Lambda>
   end
 
   rule definition
-    (symbol) whitespace* (cell / string / list / vector / lambda / symbol / quotes) "\n" <Definition>
+    symbol whitespace* cell "\n" <Definition>
   end
 
   rule special
