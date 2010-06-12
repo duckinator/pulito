@@ -1,4 +1,4 @@
-module Rasp
+module Pulito
   class Runtime
     class Scope
       attr_accessor :runtime
@@ -45,7 +45,7 @@ module Rasp
       end
 
       def eval(source)
-        source = Rasp.parse(source)
+        source = Pulito.parse(source)
         raise "The parser couldn't parse it." unless source
         source.eval(self)
       end

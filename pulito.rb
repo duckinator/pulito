@@ -1,15 +1,15 @@
 require 'rubygems'
 require 'treetop'
 
-Treetop.load 'rasp.treetop'
+Treetop.load 'pulito.treetop'
 
 %w[runtime scope data/expression data/identifier callable/function callable/special callable/macro].each do |file|
   require File.join(File.dirname(__FILE__), 'runtime', file)
 end
 
-module Rasp
+module Pulito
   def self.parse(string)
-    @parser ||= RaspParser.new
+    @parser ||= PulitoParser.new
     @parser.parse(string)
   end
 
@@ -19,9 +19,9 @@ module Rasp
       p expression if $DEBUG
       return [] if expression.size == 0
 
-      expression = Rasp.macroexpand(expression, scope)
+      expression = Pulito.macroexpand(expression, scope)
 
-      callable = Rasp.evaluate(expression.first, scope)
+      callable = Pulito.evaluate(expression.first, scope)
       raise "Tried to call '#{callable}', but it has no 'call' method." unless callable.respond_to? :call
 
       args = expression[1..-1]
@@ -30,7 +30,7 @@ module Rasp
       when Runtime::Special
         callable.call(scope, args)
       when Runtime::Function
-        callable.call(args.map{|arg| Rasp.evaluate(arg, scope)})
+        callable.call(args.map{|arg| Pulito.evaluate(arg, scope)})
       else
         callable.call(*args)
       end
@@ -54,18 +54,18 @@ module Rasp
     elsif first.is_a?(Runtime::Identifier) && first.name[0,1] == "."
       raise "Method call expression badly formed, expecting (.method object ...)" if form.length < 2
 
-      [DOT, form[1], Rasp.sym(first.name[1..-1]), *form[2..-1]]
+      [DOT, form[1], Pulito.sym(first.name[1..-1]), *form[2..-1]]
     else
       form
     end
   end
 
   def self.macroexpand(form, scope)
-    exp = Rasp.macroexpand_1(form, scope)
+    exp = Pulito.macroexpand_1(form, scope)
     if exp == form
       form
     else
-      Rasp.macroexpand(exp, scope)
+      Pulito.macroexpand(exp, scope)
     end
   end
 
@@ -92,7 +92,7 @@ module Rasp
     def eval(scope)
       convert!
       p @data if $DEBUG
-      @data.map{|part| Rasp.evaluate(part, scope)}.last
+      @data.map{|part| Pulito.evaluate(part, scope)}.last
     end
 
     def convert!
@@ -112,7 +112,7 @@ module Rasp
 
   class QuotedCell < Treetop::Runtime::SyntaxNode
     def eval
-      Rasp.quote(elements[1].eval)
+      Pulito.quote(elements[1].eval)
     end
   end
 
@@ -123,7 +123,7 @@ module Rasp
 
     def syntax_quote(form)      
       if form.is_a? Runtime::Identifier
-        Rasp.quote(form)
+        Pulito.quote(form)
       elsif is_unquote?(form)
         form[1]
       elsif is_unquote_splicing?(form)
@@ -138,11 +138,11 @@ module Rasp
     def expand_list(list)
       list.map do |form|
         if is_unquote?(form)
-          Rasp.list(form[1])
+          Pulito.list(form[1])
         elsif is_unquote_splicing?(form)
           form[1]
         else
-          Rasp.list(syntax_quote(form)) 
+          Pulito.list(syntax_quote(form)) 
         end
       end
     end
@@ -176,7 +176,7 @@ module Rasp
 
   class Symbol < Treetop::Runtime::SyntaxNode
     def eval
-      Rasp.sym(text_value)
+      Pulito.sym(text_value)
     end
   end
 
@@ -192,7 +192,7 @@ module Rasp
 
   class Vector < Treetop::Runtime::SyntaxNode
     def eval
-      Rasp.list(*cells.map{|c| c.eval})
+      Pulito.list(*cells.map{|c| c.eval})
     end
 
     def cells
@@ -208,7 +208,7 @@ module Rasp
 end
 
 if $0 == __FILE__
-  runtime = Rasp::Runtime.new
-  tree = Rasp.parse(ARGF.read)
+  runtime = Pulito::Runtime.new
+  tree = Pulito.parse(ARGF.read)
   value = tree.eval(runtime.user_scope)
 end

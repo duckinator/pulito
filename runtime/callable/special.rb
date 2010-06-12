@@ -1,4 +1,4 @@
-module Rasp
+module Pulito
   class Runtime
     class Special < Function
       def call(scope, params)

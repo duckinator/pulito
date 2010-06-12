@@ -1,4 +1,4 @@
-module Rasp
+module Pulito
   class Runtime
     class Function
       attr_reader :body, :name
@@ -40,7 +40,7 @@ module Rasp
 
         r = nil
         @body.each do |form|
-          r = Rasp.evaluate(form, closure)
+          r = Pulito.evaluate(form, closure)
         end
         r
       end

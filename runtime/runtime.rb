@@ -1,4 +1,4 @@
-module Rasp
+module Pulito
   class Runtime
     attr_accessor :top_level, :user_scope, :stack
 
@@ -23,7 +23,7 @@ module Rasp
       # This is the Ruby const_get function. Important for Ruby interop.
       scope.defspecial('::') do |scope, params|
         if name = params[1]
-          context = Rasp.evaluate(params[0], scope)
+          context = Pulito.evaluate(params[0], scope)
         else
           name = params[0]
           context = Object
@@ -42,7 +42,7 @@ module Rasp
       # The last one will be translated to (. obj meth arg1 arg2)
       #
       scope.defspecial('.') do |scope, params|
-        reciever = Rasp.evaluate(params[0], scope)
+        reciever = Pulito.evaluate(params[0], scope)
 
         case params[1]
         when Runtime::Identifier
@@ -59,11 +59,11 @@ module Rasp
         block = nil
 
         if i = args.find_index{|arg| arg.to_s == '&' }
-          block = Rasp.evaluate(args[i + 1], scope)
+          block = Pulito.evaluate(args[i + 1], scope)
           args = args[0...i]
         end
 
-        args.map!{|arg| Rasp.evaluate(arg, scope)}
+        args.map!{|arg| Pulito.evaluate(arg, scope)}
 
         reciever.__send__(method, *args, &block)
       end
@@ -79,24 +79,24 @@ module Rasp
       end
 
       scope.defspecial('eval') do |scope, params|
-        Rasp.evaluate(Rasp.evaluate(params[0], scope), scope)
+        Pulito.evaluate(Pulito.evaluate(params[0], scope), scope)
       end
 
       scope.defspecial('do') do |scope, params|
         val = nil
 
         params.each do |param|
-          val = Rasp.evaluate(param, scope)
+          val = Pulito.evaluate(param, scope)
         end
 
         val
       end
 
       scope.defspecial('if') do |scope, params|
-        if(Rasp.evaluate(params[0], scope))
-          Rasp.evaluate(params[1], scope)
+        if(Pulito.evaluate(params[0], scope))
+          Pulito.evaluate(params[1], scope)
         else
-          Rasp.evaluate(params[2], scope) if params[2]
+          Pulito.evaluate(params[2], scope) if params[2]
         end
       end
 
@@ -104,9 +104,9 @@ module Rasp
         condition = params[0]
         body = params[1..-1]
 
-        while(Rasp.evaluate(condition, scope))
+        while(Pulito.evaluate(condition, scope))
           body.each do |form|
-            Rasp.evaluate(form, scope)
+            Pulito.evaluate(form, scope)
           end
         end
       end
@@ -117,7 +117,7 @@ module Rasp
         # return nil if there are no params
         if params.count > 0
           params.each do |param|
-            if val = Rasp.evaluate(param, scope)
+            if val = Pulito.evaluate(param, scope)
               # return if it evalutes to logical true
               break
             end
@@ -133,7 +133,7 @@ module Rasp
         # return true if there are no params
         if params.count > 0
           params.each do |param|
-            if not val = Rasp.evaluate(param, scope)
+            if not val = Pulito.evaluate(param, scope)
               # return if it evalutes to logical false
               break
             end
@@ -144,7 +144,7 @@ module Rasp
       end
 
       scope.defspecial('def') do |scope, params|
-        scope[params[0]] = Rasp.evaluate(params[1], scope)
+        scope[params[0]] = Pulito.evaluate(params[1], scope)
       end
 
       scope.defspecial('fn') do |scope, params|
@@ -161,18 +161,18 @@ module Rasp
 
       scope.defspecial('apply') do |scope, params|
         f = params[0]
-        args = params[1..-1].map{|param| Rasp.evaluate(param, scope)}
+        args = params[1..-1].map{|param| Pulito.evaluate(param, scope)}
         args += args.pop.to_a
 
-        Rasp.evaluate([f, *args], scope)
+        Pulito.evaluate([f, *args], scope)
       end
 
       scope.defspecial('macroexpand-1') do |scope, params|
-        Rasp.macroexpand_1(Rasp.evaluate(params.first, scope), scope)
+        Pulito.macroexpand_1(Pulito.evaluate(params.first, scope), scope)
       end
 
       scope.defspecial('macroexpand') do |scope, params|
-        Rasp.macroexpand(Rasp.evaluate(params.first, scope), scope)
+        Pulito.macroexpand(Pulito.evaluate(params.first, scope), scope)
       end
 
         # (def apply (fn (f & args)
@@ -191,7 +191,7 @@ module Rasp
         # (defmacro loop (& body)
         #   ['. 'Kernel ['loop '& (concat ['fn ()] body)]])
       
-      scope.eval(File.read(File.join(File.dirname(__FILE__), "core.rasp")))
+      scope.eval(File.read(File.join(File.dirname(__FILE__), "core.pulito")))
     end
   end
 end

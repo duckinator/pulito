@@ -3,9 +3,9 @@
 
 (def *server* "irc.ninthbit.net")
 (def *port* 6667)
-(def *nick* "rasp-bot")
-(def *user* "rasp")
-(def *realname* "An IRC bot written in Rasp")
+(def *nick* "pulito-bot")
+(def *user* "pulito")
+(def *realname* "An IRC bot written in Pulito")
 (def *channels* ["#programming" "#offtopic"])
 
 (def *bot* (.new TCPSocket *server* *port*))
