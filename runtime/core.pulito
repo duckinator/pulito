@@ -1,16 +1,25 @@
-(def list (fn (& args) args))
+#(def list (fn (& args) args))
 
-(defn map (f ary)
-  (.map ary & f))
+list [fn (& args) args]: ;
 
-(defn concat (& args)
-  (.reduce args [] "+"))
+map [f ary]:
+	(.map ary & f)
+;
 
-(def defmacro (macro (name args & forms)
-		     `(def ~name ~(apply macro args forms))))
+concat [& args]:
+	(.reduce args [] "+")
+;
 
-(defn reduce (f ary)
-  (.reduce ary & f))
+#(def defmacro (macro (name args & forms)
+#		     `(def ~name ~(apply macro args forms))))
+
+defmacro [macro [name args & forms]]:
+	`(def ~name ~(apply macro args forms))
+;
+
+reduce [f ary]:
+	(.reduce ary & f)
+;
 
 (defmacro import (& classes)
   `(do ~@(map (fn (class)
@@ -19,8 +28,9 @@
 
 (import Kernel Object Module Class Range String Array)
 
-(defn require (name)
-  (.require Kernel name))
+require [name]:
+	(.require Kernel name)
+;
 
 (defmacro comment (& forms))
 
@@ -29,17 +39,20 @@
     `(. ~obj ~form)
     `(.. (. ~obj ~form) ~@more)))
 
-(defn range (min max)
-  (.new Range min max))
+range [min max]:
+	(.new Range min max)
+;
 
 (defmacro loop (& body)
   `(.loop Kernel & (fn () ~@body)))
 
-(defn str (& args)
-  (.join args))
+str [& args]:
+	(.join args)
+;
 
-(defn not (x)
-  (.!@ x))
+not [x]:
+	(.!@ x)
+;
 
 (defmacro when (condition & body)
   `(if ~condition (do ~@body) nil))
@@ -47,27 +60,36 @@
 (defmacro when-not (condition & body)
   `(if ~condition nil (do ~@body)))
 
-(defn print (& args)
-  (.print Kernel (.join args " ")))
+print [& args]:
+	(.print Kernel (.join args " "))
+;
 
-(defn println (& args)
-  (apply print args)
-  (print "\n"))
+println [& args]:
+	(apply print args)
+	(print "\n")
+;
 
-(defn pr (& args)
-  (apply print (map (fn (arg)
-                      (.inspect arg))
-                    args)))
+pr [& args]:
+  (apply print (map [arg]:
+                    	(.inspect arg))
+                    	args
+                    ;)
+;
 
-(defn prn (& args)
+prn [& args]:
   (apply pr args)
-  (print "\n"))
+  (print "\n")
+;
 
-(defn each (f ary)
-  (.each ary & f))
+each [f ary]:
+  (.each ary & f)
+;
 
-(defn + (& args)
-  (.reduce args 0 "+"))
++ [& args]:
+	(.reduce args 0 "+")
+;
 
-(defn * (& args)
-  (.reduce args 1 "*"))
+* [& args]:
+	(.reduce args 1 "*")
+;
+
