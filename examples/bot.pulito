@@ -1,14 +1,14 @@
 (require "socket")
 (import TCPSocket)
 
-*server*   = "irc.ninthbit.net"
-*port*     = 6667
-*nick*     = "pulito-bot"
-*user*     = "pulito"
-*realname* = "An IRC bot written in Pulito"
-*channels* = ["#programming" "#offtopic"]
+server   = "irc.ninthbit.net"
+port     = 6667
+nick     = "pulito-bot"
+user     = "pulito"
+realname = "An IRC bot written in Pulito"
+channels = ["#programming" "#offtopic"]
 
-*bot*      = (.new TCPSocket *server* *port*)
+bot      = (.new TCPSocket server port)
 
 send [socket & args]:
   (println ">>>" (.join args))
@@ -18,17 +18,17 @@ send [socket & args]:
 handle-line [line]:
   (println line)
   (when (.start_width? line "PING") :
-    (send *bot* "PONG" (.slice line (range 4 -1)))
+    (send bot "PONG" (.slice line (range 4 -1)))
   ;)
   (when (.. line split (at 1) (== "001")) :
-    (send *bot* "JOIN" (.join *channels* ","))
+    (send bot "JOIN" (.join channels ","))
   ;)
 ;
 
-(send *bot* "USER " *user* " * * :" *realname*)
-(send *bot* "NICK " *nick*)
+(send bot "USER " user "   :" realname)
+(send bot "NICK " nick)
 
-(while (not (.eof *socket*)) :
+(while (not (.eof socket)) :
   (handle-line line)
 ;)
 
