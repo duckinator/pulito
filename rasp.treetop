@@ -47,6 +47,14 @@ grammar Rasp
     '"' ('\\"' / [^"])* '"' <String>
   end
 
+  rule lambda
+    vector ':' cell* ';' <Lambda>
+  end
+
+  rule definition
+    letter+ (whitespace+)? [=]? (whitespace+)? (cell / string / list / vector / lambda / symbol / quotes)
+  end
+
   rule special
     [!$%&*/:<=>?^_~+.@-]
   end
@@ -65,6 +73,6 @@ grammar Rasp
   end
 
   rule comment
-    ';' (!"\n" .)* "\n"?
+    '#' (!"\n" .)* "\n"?
   end
 end
