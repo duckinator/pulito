@@ -191,7 +191,7 @@ module Pulito
         # (defmacro loop (& body)
         #   ['. 'Kernel ['loop '& (concat ['fn ()] body)]])
       
-      scope.eval(File.read(File.join(File.dirname(__FILE__), "core.pulito")))
+#      scope.eval(File.read(File.join(File.dirname(__FILE__), "core.pulito")))
     end
   end
 end
