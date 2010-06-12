@@ -1,7 +1,7 @@
 (require "socket")
 (import TCPSocket)
 
-(def *server* "localhost")
+(def *server* "irc.ninthbit.net")
 (def *port* 6667)
 (def *nick* "rasp-bot")
 (def *user* "rasp")
