@@ -1,14 +1,14 @@
 (require "socket")
 (import TCPSocket)
 
-server   = "irc.ninthbit.net"
-port     = 6667
-nick     = "pulito-bot"
-user     = "pulito"
-realname = "An IRC bot written in Pulito"
-channels = ["#programming" "#offtopic"]
+server   "irc.ninthbit.net"
+port     6667
+nick     "pulito-bot"
+user     "pulito"
+realname "An IRC bot written in Pulito"
+channels ["#programming" "#offtopic"]
 
-bot      = (.new TCPSocket server port)
+bot      (.new TCPSocket server port)
 
 send [socket & args]:
   (println ">>>" (.join args))
