@@ -25,7 +25,7 @@ handle-line [line]:
   ;)
 ;
 
-(send bot "USER " user "   :" realname)
+(send bot "USER " user " * * :" realname)
 (send bot "NICK " nick)
 
 (while (not (.eof socket)) :
