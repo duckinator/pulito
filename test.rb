@@ -25,3 +25,8 @@ puts "\nPulito::Variable"
 v = Pulito::Variable.new(:hai, n2)
 puts v
 p v
+
+puts "\nPulito::List"
+l = Pulito::List.new(["a", "b", 3, 4])
+puts l
+p l
