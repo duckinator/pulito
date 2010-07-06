@@ -1,7 +1,7 @@
 Comments
 ============
 * /\* \*/   -  Non-documentation comment
-* /** */  -  Documentation comment
+* /\*\* \*/  -  Documentation comment
 
 Lambdas
 ========
