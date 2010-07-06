@@ -3,6 +3,10 @@ Comments
 * /\* \*/   -  Non-documentation comment
 * /\*\* \*/  -  Documentation comment
 
+Lists
+======
+    ["a" "b" 3 4]
+
 Lambdas
 ========
 Lambdas are merely a block of code that accepts arguments, if you just need a block, then leave the argument array empty.
@@ -49,6 +53,11 @@ Throwing It Together
 AST
 ===
 This is just a quick layout for the AST.
+
+## Lists ##
+    ["a" "b" 3 4]
+would become
+    [:list, "a", "b", 3, 4]
 
 ## Function calls ##
     + 1 2
