@@ -72,7 +72,7 @@ would become
       + arg1 arg2
     ;
 would become
-    [:define, :'funciton-name',
+    [:define, :'function-name',
       [:lambda, [:arg1, :arg2],
          [:+, :arg1, :arg2]]]
 
