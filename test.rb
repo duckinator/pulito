@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'datatypes.rb'
+require 'pulito.rb'
 
 puts "Pulito::Character"
 c = Pulito::Character.new('a')
@@ -30,3 +30,9 @@ puts "\nPulito::List"
 l = Pulito::List.new(["a", "b", 3, 4])
 puts l
 p l
+
+Pulito.parse('
+.foo :[l]
+  print (join " " l)
+;
+')
