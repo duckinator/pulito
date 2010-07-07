@@ -118,4 +118,16 @@ module Pulito
       @value.inspect
     end
   end
+
+  class Lambda < Base
+    attr_accessor :args, :body
+    def initialize(args, body)
+      @args = args
+      @body = Pulito.parse(body)
+    end
+
+    def to_s
+      @body.to_s
+    end
+  end
 end

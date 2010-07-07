@@ -31,6 +31,11 @@ l = Pulito::List.new(["a", "b", 3, 4])
 puts l
 p l
 
+puts "\nPulito::Lambda"
+l = Pulito::Lambda.new(["a", "b", 3, 4], v)
+puts l
+p l
+
 Pulito.parse('
 .foo :[l]
   print (join " " l)
