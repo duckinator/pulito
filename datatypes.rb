@@ -123,7 +123,7 @@ module Pulito
     attr_accessor :args, :body
     def initialize(args, body)
       @args = args
-      @body = Pulito.parse(body)
+      @body = Pulito.generate_ast(body)
     end
 
     def to_s

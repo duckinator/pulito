@@ -36,7 +36,7 @@ l = Pulito::Lambda.new(["a", "b", 3, 4], v)
 puts l
 p l
 
-Pulito.parse('
+Pulito.generate_ast('
 .foo :[l]
   print (join " " l)
 ;
