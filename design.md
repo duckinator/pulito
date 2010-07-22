@@ -1,14 +1,14 @@
 Comments
-============
+========
 * ;   -  Non-documentation comment
 * ;;   -  Documentation comment
 
 Lists
-======
+=====
     ["a" "b" 3 4]
 
 Lambdas
-========
+=======
 Lambdas are merely a block of code that accepts arguments, if you just need a block, then leave the argument array empty.
 Lambdas return the last value.
     |arg1 arg2|
@@ -16,13 +16,24 @@ Lambdas return the last value.
     .
 
 
+String Interpolation
+====================
+pultio uses ruby-style string interpolation, ie:
+    a "foo"
+    b "bar"
+    (print "#{foo}#{bar}")
+is the same as
+    a "foo"
+    b "bar"
+    (print (join '' a b))
+
 Variable Definition
-=====================
+===================
     a-list ["abc" "def"]
 
 
 Function Definition
-=======================
+===================
 Functions are variables defined as a lambda
     ;; joins /str1/ and /str2/ with a space, and print the resulting string
     function1 :[str1 str2]
@@ -37,12 +48,12 @@ Functions are variables defined as a lambda
     .
 
 Function Calling
-====================
+================
     (function1 ["foo" "bar"])
 
 
 Throwing It Together
-=====================
+====================
     ; Define a-list
     a-list ["abc" "def"]
     
