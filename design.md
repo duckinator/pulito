@@ -36,7 +36,7 @@ Function Definition
 ===================
 Functions are variables defined as a lambda
     ;; joins /str1/ and /str2/ with a space, and print the resulting string
-    function1 :[str1 str2]
+    function1 |str1 str2|
       string (join " " [str1 str2])
       (print string)
     .
