@@ -21,7 +21,7 @@ String Interpolation
 pultio uses ruby-style string interpolation, ie:
     a "foo"
     b "bar"
-    (print "#{foo}#{bar}")
+    (print "#{a}#{b}")
 is the same as
     a "foo"
     b "bar"
