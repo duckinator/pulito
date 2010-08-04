@@ -62,6 +62,7 @@ puts
 puts 'print -12.'
 Pulito.generate_ast('print -12.')
 
+puts
 puts "print 'a'."
 Pulito.generate_ast("print 'a'.")
 
@@ -77,5 +78,6 @@ puts
 puts 'foo = -12.'
 Pulito.generate_ast('foo = -12.')
 
+puts
 puts "foo = 'a'."
 Pulito.generate_ast("foo = 'a'.")
