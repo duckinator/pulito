@@ -37,7 +37,10 @@ puts l
 p l
 
 Pulito.generate_ast('
-foo |l|
+foo = |l|
   print (join " " l)
 .
+x = ["a" "b" "c"].
+foo x.
+foo ["d" "e" "f"].
 ')
