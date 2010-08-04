@@ -58,6 +58,9 @@ puts
 puts 'print 12.'
 Pulito.generate_ast('print 12.')
 
+puts "print 'a'."
+Pulito.generate_ast("print 'a'.")
+
 puts
 puts 'foo = "bar".'
 Pulito.generate_ast('foo = "bar".')
@@ -65,3 +68,6 @@ Pulito.generate_ast('foo = "bar".')
 puts
 puts 'foo = 12.'
 Pulito.generate_ast('foo = 12.')
+
+puts "foo = 'a'."
+Pulito.generate_ast("foo = 'a'.")
