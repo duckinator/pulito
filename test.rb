@@ -36,11 +36,32 @@ l = Pulito::Lambda.new(["a", "b", 3, 4], v)
 puts l
 p l
 
+=begin
 Pulito.generate_ast('
 foo = |l|
-  print (join " " l)
+  print (join " " l).
+  print "1 2 3".
+  print 2.
+  print 12.
 .
 x = ["a" "b" "c"].
 foo x.
 foo ["d" "e" "f"].
+|1| .
 ')
+=end
+
+puts 'print "hi".'
+Pulito.generate_ast('print "hi".')
+
+puts
+puts 'print 12.'
+Pulito.generate_ast('print 12.')
+
+puts
+puts 'foo = "bar".'
+Pulito.generate_ast('foo = "bar".')
+
+puts
+puts 'foo = 12.'
+Pulito.generate_ast('foo = 12.')
