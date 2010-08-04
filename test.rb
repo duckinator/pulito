@@ -37,7 +37,7 @@ puts l
 p l
 
 Pulito.generate_ast('
-.foo :[l]
+foo |l|
   print (join " " l)
-;
+.
 ')
