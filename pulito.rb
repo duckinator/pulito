@@ -18,7 +18,7 @@ module Pulito
     end
 
     def finish
-      @finished = false
+      @finished = true
     end
 
     def save
@@ -63,9 +63,6 @@ module Pulito
           current = arg[i]
           @linepos += 1
           @i = i
-          if @finished
-            start :nil, i
-          end
 
           case current
             when '|'  # Arglists
