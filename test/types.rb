@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 require File.join(File.dirname(__FILE__), 'test.rb')
 
-c = test :Character, 'a'
+c = type :Character, 'a'
 
-s = test :String, "ab"
+s = type :String, "ab"
 
-n = test :Number, 1
+n = type :Number, 1
 
-n2 = test :Number, 1.5
+n2 = type :Number, 1.5
 
-v = test :Variable, :hai, n2
+v = type :Variable, :hai, n2
 
-li = test :List, ["a", "b", 3, 4]
+li = type :List, ["a", "b", 3, 4]
 
-la = test :Lambda, ["a", "b", 3, 4], v
+la = type :Lambda, ["a", "b", 3, 4], v
 

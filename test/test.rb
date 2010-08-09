@@ -2,11 +2,11 @@
 
 require File.join(File.dirname(__FILE__), '..', 'pulito.rb')
 
-def test(type, *args)
-  type = type.to_s
-  type = eval "Pulito::#{type}"
-  p type
-  x = type.new(*args)
+def type(type, *args)
+  t = type.to_s
+  t = eval "Pulito::#{type}"
+  p t
+  x = t.new(*args)
   puts x
   p x
   puts
