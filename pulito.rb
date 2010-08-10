@@ -32,8 +32,17 @@ module Pulito
     end
 
     def error(message)
-      puts "#{@line}:#{@linepos}: #{message}"
+      puts "[ParseError] #{@line}:#{@linepos}: #{message}"
       exit 1
+    end
+
+    def expected(expecting, received)
+      expecting = expecting.to_s
+      received = received.to_s
+      r_delimeter = e_delimeter = "'"
+      r_delimeter = '"' if received.length > 1
+      e_delimeter = '"' if expecting.length > 1
+      error "Unexpected #{r_delimeter + received.inspect + r_delimeter}, expected #{e_delimeter + expecting.inspect + e_delimeter}."
     end
 
     def check(type)
@@ -69,7 +78,7 @@ module Pulito
               check :arglist
               if @type == :arglist
                 finish
-              else
+              else # TODO: Check for conflicting types here
                 start :arglist
               end
 
@@ -77,7 +86,7 @@ module Pulito
               check :char
               if @type == :char
                 finish
-              else
+              else # TODO: Check for conflicting types here
                 start :char, 1
               end
 
@@ -85,7 +94,7 @@ module Pulito
               check :string
               if @type == :string
                 finish
-              else
+              else # TODO: Check for conflicting types here
                 start :string, 1
               end
 
@@ -99,7 +108,8 @@ module Pulito
                 elsif !@type.nil?
                   start :number
                 else
-                  puts 'number in middle of something else'
+                  #puts 'number in middle of something else'
+                  expected @type.to_s, "number"
                 end
               end
 
@@ -111,16 +121,18 @@ module Pulito
               check :whitespace
               if @type == :whitespace
                 @item += current
-              else
+              else # TODO: Check for conflicting types here
                 start :whitespace
               end
 
             when "\n"
+              # TODO: Check if we're in a string/char
               @line += 1
               @linepos = 0
               puts "line #{@line}"
 
             else
+              # TODO: Clean up this horrid mess
               if (@type == :string) || (@type == :char)
                 @item += current
               elsif (current == '-') && ('1'..'9').include?(arg[i+1])
@@ -131,7 +143,7 @@ module Pulito
                 if @type == :unknown
                   @item += current
                 else
-                  start :unknown
+                  start nil
                 end
               end
           end
