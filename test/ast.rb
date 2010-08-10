@@ -17,3 +17,6 @@ ast 'foo = -12.'
 
 ast "foo = 'a'."
 
+ast 'foo ["a" "b" 3 4].'
+
+ast 'foo = ["a" "b" 3 4].'

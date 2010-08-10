@@ -8,7 +8,4 @@ foo = |l|
   print 2.
   print 12.
 .
-x = ["a" "b" "c"].
-foo x.
-foo ["d" "e" "f"].
 '
