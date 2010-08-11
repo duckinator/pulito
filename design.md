@@ -86,7 +86,7 @@ would become
     [:send, 'add', [:number, 1],
                    [:number, 2]]
 
-## Lamdas ##
+## Lambdas ##
     ; we assume "a + b" is defined as "add a b"
     |arg1 arg2|
       arg1 + arg2.
