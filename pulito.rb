@@ -92,5 +92,5 @@ l.lex("foo = |x|
 
 #l.lex("\\\"")
 #l.lex("\\\'")
-l.lex('"a')
-l.lex("'a")
+#l.lex('"a')
+#l.lex("'a")
