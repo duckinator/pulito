@@ -1,0 +1,33 @@
+a = "foo".
+b = "bar".
+n = 345.
+
+; define a list
+alist = ["abc" "def"].
+
+;; joins /str1/ and /str2/ with a space, and print the resulting string
+function1 = |str1 str2|
+  string = join " " [str1 str2].
+  println string.
+.
+
+;; joins all items in /list/ with spaces, and print the resulting string
+function2 = |list|
+  string = join " " list.
+  println string.
+.
+
+; combine the two items with a space.
+function1 "foo" "bar".
+
+; combine each item in a-list with a space, and prints them
+function2 alist.
+
+; combine each item in ['foo' 'bar'] with a space, and prints them
+function2 ["foo" "bar"].
+
+println (join "" a b).
+
+println "#{a}#{b}".
+
+println n.
