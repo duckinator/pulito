@@ -1,6 +1,14 @@
 #!/usr/bin/env ruby
 
 class String
+  def valid_name?
+    self.tr('[a-z][A-Z][0-9]_', '').empty?
+  end
+
+  def valid_name_start?
+    self.tr('[a-z][A-Z]_', '').empty?
+  end
+
   def alphanumeric?
     self.tr('[a-z][A-Z][0-9]', '').empty?
   end
@@ -12,9 +20,8 @@ end
 
 module Pulito
   class Lexer
-    def initialize(code = nil, in_statement = false)
+    def initialize(code = nil)
       lex code unless code.nil?
-      @in_statement = in_statement
     end
     def error(str)
       puts "[Lexer Error] #{@line}:#{@column}: #{str}"
@@ -76,10 +83,8 @@ module Pulito
             @column = 0
 
           else
-            if char.alphanumeric?
-              if !char.numeric? && !@in_statement
-                # Start of a statement
-              end
+            if char.valid_name_start?
+              # Insert awesomeness
             end
         end
         @i += 1
