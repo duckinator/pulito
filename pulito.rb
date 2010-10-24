@@ -12,6 +12,10 @@ end
 
 module Pulito
   class Lexer
+    def initialize(code = nil, in_statement = false)
+      lex code unless code.nil?
+      @in_statement = in_statement
+    end
     def error(str)
       puts "[Lexer Error] #{@line}:#{@column}: #{str}"
       exit 1
@@ -71,9 +75,11 @@ module Pulito
             @line += 1
             @column = 0
 
-          when /[a-zA-Z0-9]/ # Yes, yes, I know. Bite me, it works for now.
-            if char.alphanumeric? && @column == 1
-              p char # Moo
+          else
+            if char.alphanumeric?
+              if !char.numeric? && !@in_statement
+                # Start of a statement
+              end
             end
         end
         @i += 1
