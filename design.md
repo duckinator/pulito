@@ -92,25 +92,28 @@ would become
       arg1 + arg2.
     .
 would become
-    [:lambda, ['arg1', 'arg2'], [:send, 'add', 'arg1', 'arg2']]
+    [:lambda, [[:argument, "arg1"], [:argument, "arg2"]],
+       [:call, [:variable, "add"], [:variable, "arg1"], [:variable, "arg2"]]]
 
 ## Variable definitions ##
     variable-name = "value"
 would become
-    [:define, 'variable-name', "value"]
+    [:define, "variable-name", "value"]
 
 ## Function definitions, aka variables defined as lambdas ##
-    function-name |arg1 arg2|
+    function-name = |arg1 arg2|
       (+ arg1 arg2)
     .
 would become
-    [:define, 'function-name',
-      [:lambda, ['arg1', 'arg2'],
-         [:send, 'add', 'arg1', 'arg2']]]
+    [:define, "function-name",
+      [:lambda, [[:argument, "arg1"], [:argument, "arg2"]],
+         [:call, [:variable, "add"], [:variable, "arg1"], [:variable, "arg2"]]]]
 
+
+and
 
     ["a" "b" 1 2]
-->
+would become
     [:list,
       [:string, "a"],
       [:string, "b"],
