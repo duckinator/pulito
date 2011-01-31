@@ -102,12 +102,12 @@ would become
 
 ## Function definitions, aka variables defined as lambdas ##
     function-name = |arg1 arg2|
-      (+ arg1 arg2)
+      arg1 + arg2.
     .
 would become
     [:define, "function-name",
       [:lambda, [[:argument, "arg1"], [:argument, "arg2"]],
-         [:call, [:variable, "add"], [:variable, "arg1"], [:variable, "arg2"]]]]
+         [:call, [:variable, "+"], [:variable, "arg1"], [:variable, "arg2"]]]]
 
 
 and
