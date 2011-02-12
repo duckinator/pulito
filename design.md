@@ -83,7 +83,7 @@ would become
 ## Function calls ##
     add 1 2.
 would become
-    [:send, 'add', [:number, 1],
+    [:call, 'add', [:number, 1],
                    [:number, 2]]
 
 ## Lambdas ##
