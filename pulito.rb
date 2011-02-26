@@ -51,11 +51,11 @@ module Pulito
     end
 
     def assertNotEscaped(escaped, type)
-      puts
       error "Escaped #{escaped} outside of a #{type}." if @code[@i-1] == "\\"
     end
 
     def lex(code)
+      @last_type = nil
       @code = code
       @line = 1
       @column = 1
@@ -65,17 +65,19 @@ module Pulito
         @column += 1
         case char
           when '"'
-            assertNotEscaped('double quote', 'string literal')
+            assertNotEscaped('double quote', 'string literal') unless @last_type == :string_literal
+            @last_type = :string_literal
             assertHasMore("string literal")
             result = read_to('"')
             error "Unterminated string." if result.nil?
             puts "Found string: #{result.inspect}"
 
           when "'"
+            @last_type = :char_literal
             assertNotEscaped('single quote', 'character literal')
             assertHasMore("character literal")
             result = read_to("'")
-            expect "'", @code[@i]
+            error "Unterminated character literal." if result.nil?
             puts "Found string: #{result.inspect}"
 
           when "\n"
@@ -85,6 +87,8 @@ module Pulito
           else
             if char.valid_name_start?
               # Insert awesomeness
+              old_i = @i
+              @i += 1 while ![' ', "\n", "."].include? @code[@i]
             end
         end
         @i += 1
@@ -101,7 +105,7 @@ l.lex("foo = |x|
 .")
 
 
-#l.lex("\\\"")
+l.lex('"\""')
 #l.lex("\\\'")
 #l.lex('"a')
 #l.lex("'a")
